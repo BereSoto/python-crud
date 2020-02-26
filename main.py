@@ -1,25 +1,26 @@
 import sys
-clients = 'pablo,ricardo,'
+
+clients = ['Pablo', 'Ricardo']
 
 def create_client(client_name):
     global clients
     
     if client_name not in clients:
-        clients += client_name
-        _add_comma()
+        clients.append(client_name)
+        
     else:
         print('Client already is in the client\'s list')
 
 def list_clients():
-    global clients
-
-    print(clients)
+    for idx, client in enumerate(clients):
+        print('{}: {}'.format(idx, client))
 
 def update_client(client_name, update_client_name):
     global clients
 
     if clients in clients:
-        clients = clients.replace(client_name + ',', update_client_name)
+        index = clients.index(client_name)
+        clients[index] = update_client_name
     else:
         print('client is not in client list')
 
@@ -27,23 +28,18 @@ def delete_client(client_name):
     global clients
 
     if client_name in clients:
-        clients = clients.replace(client_name + ',', '')
+        clients.remove(client_name)
     else:
         print('Clients is not in clients list')
 
 def search_client(client_name):
-    clients_list = clients.split(',')
-
-    for client in clients_list:
+    
+    for client in clients:
         if client != client_name:
             continue
         else: 
             return True
 
-def _add_comma():
-    global clients
-
-    clients += ','
 
 def _get_client_name():
     client_name = None
@@ -66,6 +62,7 @@ def _print_welcome():
     print('*' * 50)
     print('what would you like to do today?')
     print('[C]reate client')
+    print('[L]ist client')
     print('[U]pdate client')
     print('[D]elete client')
     print('[S]earch client')
@@ -86,6 +83,9 @@ if __name__ == '__main__':
         delete_client(client_name)
         list_clients()
 
+    elif command == 'L':
+        list_clients()
+        
     elif command == 'U':
         client_name = _get_client_name()
         update_client_name = input ( 'whats is the update client name')
